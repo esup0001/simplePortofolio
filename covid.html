@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Eko Supriyono</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <!-- Simple line icons-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css"
+        rel="stylesheet" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
+        rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- Navigation-->
+    <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand"><a href="./">Eko's homepage</a></li>
+            <li class="sidebar-nav-item"><a href="./">Home</a></li>
+            <li class="sidebar-nav-item"><a href="./covid.html">About Covid</a></li>
+            <li class="sidebar-nav-item"><a href="#services">Services</a></li>
+            <li class="sidebar-nav-item"><a href="#portfolio">Portfolio</a></li>
+            <li class="sidebar-nav-item"><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <!-- Header-->
+    <header class="masthead d-flex align-items-center">
+        <div class="container px-4 px-lg-5 text-center">
+            <h1 class="mb-1">Eko Supriyono</h1>
+            <h3 class="mb-5"><em>Blogs and Projects</em></h3>
+            <a class="btn btn-primary btn-xl" href="#about">Find Out More</a>
+        </div>
+    </header>
+    <!-- Content-->
+    <div class="card-container">
+        <div class="card">
+            <h5 class="card-header">Global New Case</h5>
+            <div class="stats-number" id='newCaseWorld'></div>
+            <p class="subtitle">New Case Global</p>
+            <div class="stats-number" id='totalCaseWorld'></div>
+            <p class="subtitle">Total Case Global</p>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Global Death case</h5>
+            <div class="stats-number" id='newDeathWorld'></div>
+            <p class="subtitle">New Death Global</p>
+            <div class="stats-number" id='totalDeathWorld'></div>
+            <p class="subtitle">Total Death Global</p>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Global Recovery</h5>
+            <div class="stats-number" id='newRecWorld'></div>
+            <p class="subtitle">New Recovery Global</p>
+            <div class="stats-number" id='totalRecWorld'></div>
+            <p class="subtitle">Total Recovery Global</p>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Australia New Case</h5>
+            <div class="stats-number" id='newCaseAU'></div>
+            <p class="subtitle">New Case Australia</p>
+            <div class="stats-number" id='totalCaseAU'></div>
+            <p class="subtitle">Total Case Australia</p>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Australia Death case</h5>
+            <div class="stats-number" id='newDeathAU'></div>
+            <p class="subtitle">New Death Australia</p>
+            <div class="stats-number" id='totalDeathAU'></div>
+            <p class="subtitle">Total Death Australia</p>
+        </div>
+        <div class="card">
+            <h5 class="card-header">Australia Recovery</h5>
+            <div class="stats-number" id='newRecAU'></div>
+            <p class="subtitle">New Recovery Australia</p>
+            <div class="stats-number" id='totalRecAU'></div>
+            <p class="subtitle">Total Recovery Australia</p>
+        </div>
+
+    </div>
+    <p id="data-source">Data source: </p>
+    <!-- script for getting the data -->
+    <script type="text/javascript">
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        const newCaseW = document.getElementById('newCaseWorld');
+        const totalCaseW = document.getElementById('totalCaseWorld');
+        const newDeathW = document.getElementById('newDeathWorld');
+        const totalDeathW = document.getElementById('totalDeathWorld');
+        const newRecW = document.getElementById('newRecWorld');
+        const totalRecW = document.getElementById('totalRecWorld');
+
+        const newCaseAU = document.getElementById('newCaseAU');
+        const totalCaseAU = document.getElementById('totalCaseAU');
+        const newDeathAU = document.getElementById('newDeathAU');
+        const totalDeathAU = document.getElementById('totalDeathAU');
+        const newRecAU = document.getElementById('newRecAU');
+        const totalRecAU = document.getElementById('totalRecAU');
+
+        const dataSource = document.getElementById('data-source');
+        const url2 = 'https://api.covid19api.com/summary';
+
+        fetch(url2)
+            .then(resp => resp.json())
+            .then(function (d) {
+                let option = 'Global';
+                let title = d[option];
+
+                let au = d['Countries'][8]
+                // console.log(au);
+
+                // Put the result to the page for global stats
+                newCaseW.innerHTML = numberWithCommas(title.NewConfirmed);
+                totalCaseW.innerHTML = numberWithCommas(title.TotalConfirmed);
+                newDeathW.innerHTML = numberWithCommas(title.NewDeaths);
+                totalDeathW.innerHTML = numberWithCommas(title.TotalDeaths);
+                newRecW.innerHTML = numberWithCommas(title.NewRecovered);
+                totalRecW.innerHTML = numberWithCommas(title.TotalRecovered);
+
+                // Put the result in the page - Australia
+                newCaseAU.innerHTML = numberWithCommas(au.NewConfirmed);
+                totalCaseAU.innerHTML = numberWithCommas(au.TotalConfirmed);
+                newDeathAU.innerHTML = numberWithCommas(au.NewDeaths);
+                totalDeathAU.innerHTML = numberWithCommas(au.TotalDeaths);
+                newRecAU.innerHTML = numberWithCommas(au.NewRecovered);
+                totalRecAU.innerHTML = numberWithCommas(au.TotalRecovered);
+
+                // add data source
+                const dataDate = au.Date.slice(0, 10);
+                dataSource.innerHTML = `Data Source: Data retrieved from covid19api.com on ${dataDate}`;
+            })
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+
+        }
+
+        .stats-number {
+            font-family: "Proza Libre", Sans-serif;
+            font-weight: 300;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            font-family: "Proza Libre", Sans-serif;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .stats-number {
+
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            margin: 0;
+            font-weight: bolder;
+        }
+
+        div:hover+.subtitle {
+            /*text-shadow: 0 5px 10px rgba(230, 57, 70,1);*/
+            color: #ffffff;
+        }
+
+        .stats-number:hover {
+            /*text-shadow: 0 5px 10px rgba(230, 57, 70,1);*/
+            color: #ffffff;
+            /*border-bottom: 1px #fff solid; */
+        }
+
+        .card-container {
+            /* max-width: 1000px; */
+            margin: 0 auto;
+            overflow: auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 25px;
+        }
+
+        .card {
+            /*background-image: linear-gradient(to right, rgba(250, 232, 235, 1), rgba(211, 129, 152, 1));*/
+            background-color: rgba(0, 0, 0, 0.2);
+            color: #65768B;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 10px;
+        }
+
+        .card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            color: #65768B;
+            width: 100%;
+            padding: 15px;
+            overflow: visible;
+            font-weight: bold;
+            font-size: 2.2em;
+            display: flex;
+            justify-content: center;
+            border-left: 2px #fff solid;
+        }
+
+        .subtitle {
+            display: flex;
+            justify-content: center;
+            font-weight: lighter;
+            font-size: 1em;
+            color: #6C696B;
+        }
+
+        #data-source {
+            display: flex;
+            margin-top: 20px;
+            justify-content: center;
+        }
+    </style>
+</body>
+
+</html>
